@@ -29,44 +29,53 @@ namespace webapi_sidorova.Controllers
         }
 
         [HttpGet("{id}")]
-        public string Geе(int id)
+        public string Get(int id)
         {
             return sql.GetMessage(id);
         }
 
         [HttpPost]
-        public string Post(FormData fd)
+        public ActionResult<string> Post(FormData fd)
         {
+            string result = "";
             try
             {
                 bool success = true;
                 string pattern = "[.\\-_a-z0-9]+@([a-z0-9][\\-a-z0-9]+\\.)+[a-z]{2,6}";
                 Match isMatch = Regex.Match(fd.Mail, pattern, RegexOptions.IgnoreCase);
                 success &= isMatch.Success;
-                pattern = "^\\+7\\s\\d{3}\\s\\d{3}\\s\\d{2}\\s\\d{2}$";
-                isMatch = Regex.Match(fd.Phone, pattern, RegexOptions.IgnoreCase);
-                success &= isMatch.Success;
+                //pattern = "^\\+7\\s\\d{3}\\s\\d{3}\\s\\d{2}\\s\\d{2}$";
+                //isMatch = Regex.Match(fd.Phone, pattern, RegexOptions.IgnoreCase);
+                //success &= isMatch.Success;
                 if (success)
                 {
                     int contact = sql.GetContact(fd.Name, fd.Mail, fd.Phone);
                     if (contact > 0)
                     {
-                        return sql.NewMessage(contact, fd.ThemeId, fd.Message).ToString();
+                        result = sql.NewMessage(contact, fd.ThemeId, fd.Message).ToString();
                     }
                     else
                     {
-                        return "Возникли проблемы с добавлением собщения.";
+                        ModelState.AddModelError("FormData", "Не удалось внести сообщение в базу");
                     }
                 }
                 else
                 {
-                    return "Данные не прошли валидацию.";
+                    ModelState.AddModelError("Mail", "Некорректный e-mail");
                 }
                 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return "Ошибка.";
+                ModelState.AddModelError("Error", e.Message);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                return Ok(result);
             }
         }
     }

@@ -1,0 +1,2 @@
+Invoke-RestMethod https://localhost:44356/main -Method POST -Body (@{ Name = "Sergey"; Mail = "serzh@mail.ru"; Phone = "+7 908 123 45 89"; ThemeID = 1 ; Message = "test test test" } | ConvertTo-Json) -ContentType "application/json; charset=utf-8"
+Invoke-RestMethod https://localhost:44356/main/3006 -Method GET
