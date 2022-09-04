@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Newtonsoft.Json;
+using Dapper;
 
 namespace webapi_sidorova
 {
     public class SQL
     {
-        SqlConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=test_db;Integrated Security=True;Connect Timeout=30");
+        SqlConnection cnn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Sidorova\\Desktop\\webapi_sidorova\\bin\\Debug\\netcoreapp3.1\\test_db.mdf;Integrated Security=True;Connect Timeout=30");
         SqlDataReader reader;
         
         public string GetThemes()
@@ -111,14 +112,37 @@ namespace webapi_sidorova
         {
             try
             {
-                cnn.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand("SELECT Contacts.[User], " +
-                    "Contacts.Mail, Contacts.Phone, Themes.Content, Messages.Text, Messages.Date " +
+                //cnn.Open();
+                //SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand("SELECT Contacts.[User] AS [name], " +
+                //    "Contacts.Mail AS mail, Contacts.Phone AS phone, Themes.Content AS theme, " +
+                //    "Messages.Text AS message, Messages.Date AS [date]" +
+                //    "FROM Messages JOIN Contacts ON Messages.ContactId=Contacts.ContactId " +
+                //    "JOIN Themes ON Messages.ThemeId=Themes.ThemeId WHERE Messages.Id=" + id, cnn));
+                //DataTable dt = new DataTable();
+                //adapter.Fill(dt);
+                //return JsonConvert.SerializeObject(dt);
+
+
+                var builder = new SqlBuilder();
+
+                builder.Where("Messages.Id=@id", new { id = id });
+                //builder.Where("Messages.ContactId=@user", new { user = 1 });
+                //builder.Where("Messages.Text LIKE @some", new { some = "%test%" });
+
+                var builderTemplate = builder.AddTemplate("SELECT Messages.Id, Contacts.[User] AS [Name], " +
+                    "Contacts.Mail AS Mail, Contacts.Phone AS Phone, Themes.Content AS Theme, " +
+                    "Messages.Text AS Message, Messages.Date AS [Date] " +
                     "FROM Messages JOIN Contacts ON Messages.ContactId=Contacts.ContactId " +
-                    "JOIN Themes ON Messages.ThemeId=Themes.ThemeId WHERE Messages.Id=" + id, cnn));
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                return JsonConvert.SerializeObject(dt);
+                    "JOIN Themes ON Messages.ThemeId=Themes.ThemeId /**where**/");
+                var info = cnn.Query<Models.MessageInfo>(builderTemplate.RawSql, builderTemplate.Parameters).FirstOrDefault();
+                /*Models.MessageInfo info = cnn.Query<Models.MessageInfo>("SELECT Messages.Id, Contacts.[User] AS [Name], " +
+                    "Contacts.Mail AS Mail, Contacts.Phone AS Phone, Themes.Content AS Theme, " +
+                    "Messages.Text AS Message, Messages.Date AS [Date]" +
+                    "FROM Messages JOIN Contacts ON Messages.ContactId=Contacts.ContactId " +
+                    "JOIN Themes ON Messages.ThemeId=Themes.ThemeId WHERE Messages.Id=@Id", new { id }).FirstOrDefault();*/
+                
+                info.Addition = "bla bla bla";
+                return JsonConvert.SerializeObject(info);
             }
             catch (Exception e)
             {

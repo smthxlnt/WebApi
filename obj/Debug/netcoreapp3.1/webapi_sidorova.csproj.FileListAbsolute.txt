@@ -41,7 +41,6 @@ C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\runtimes\win-x
 C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.csprojAssemblyReference.cache
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.AssemblyInfoInputs.cache
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.AssemblyInfo.cs
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.csproj.CoreCompileInputs.cache
@@ -54,3 +53,7 @@ C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorov
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.dll
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.pdb
 C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.genruntimeconfig.cache
+C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.csproj.AssemblyReference.cache
+C:\Users\Sidorova\Desktop\webapi_sidorova\obj\Debug\netcoreapp3.1\webapi_sidorova.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\Dapper.dll
+C:\Users\Sidorova\Desktop\webapi_sidorova\bin\Debug\netcoreapp3.1\Dapper.SqlBuilder.dll
